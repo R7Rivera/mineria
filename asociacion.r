@@ -1,19 +1,23 @@
-library(tidyverse)
-
-datos <- read_csv(file = "C:/Users/rosar/mineria/asociacionbinario.csv", col_names = TRUE)
-view(datos)
 
 
+library(readr)
+
+pedidos <- read.csv(file = "C:/Users/rosar/mineria/asociacion.csv", header = TRUE, sep = ";")
+View(pedidos)
 
 
 library(arules)
-transacciones <- read.transactions(file = "C:/Users/rosar/mineria/asociacionbinario.csv",
-                                   format = "single",
-                                   sep = ",",
+
+# Cargamos los datos a un objeto de tipo transaccion 
+transacciones <- read.transactions(file = "C:/Users/rosar/mineria/asociacion.csv",
                                    header = TRUE,
-                                   cols = c("TID", "items"),
+                                   format = "single", 
+                                   sep = ";",
+                                   cols = c("TID", "items"),  
                                    rm.duplicates = TRUE)
-transacciones
+
+# El objeto contiene transacciones en filas e items en columnas
+rownames(transacciones)[1:7]
 colnames(transacciones)[1:7]
 transacciones
 
@@ -22,9 +26,8 @@ inspect(transacciones[1:7])
 
 
 df_transacciones <- as(transacciones, Class = "data.frame")
-# Para que el tamaño de la tabla se ajuste mejor, se convierte el dataframe a tibble
+# Para que el tamaño de la tabla se ajuste mejor, se convierte el dataframe 
 as.tibble(df_transacciones) %>% view()
-
 
 
 
